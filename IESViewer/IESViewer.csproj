@@ -36,9 +36,9 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="SpecificationType.cs" />
     <Compile Include="IesParser.cs" />
     <Compile Include="IES.cs" />
+    <Compile Include="Vec3.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

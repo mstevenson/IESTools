@@ -7,6 +7,8 @@ namespace IESViewer
 	{
 		public SpecificationType specification;
 
+		public string identifier;
+
 		public string test;
 		public string testDate;
 		public string issueDate;
@@ -21,6 +23,22 @@ namespace IESViewer
 		public string distribution;
 
 		public Dictionary<string, string> customAttributes;
+
+		public int lampCount;
+		public float lumens;
+		public float multiplier;
+		public int verticalAnglesCount;
+		public int horizontalAnglesCount;
+		public PhotometryType photometryType;
+		public Units units;
+		public Vec3 size;
+
+		public float ballastFactor;
+		public float inputWatts;
+
+		public int[] verticalAngles;
+		public int[] horizontalAngles;
+		public float[] candelaData;
 
 		public IES ()
 		{
