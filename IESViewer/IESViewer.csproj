@@ -39,6 +39,7 @@
     <Compile Include="IesParser.cs" />
     <Compile Include="IES.cs" />
     <Compile Include="Vec3.cs" />
+    <Compile Include="AngleCandela.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

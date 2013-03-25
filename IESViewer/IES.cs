@@ -36,9 +36,8 @@ namespace IESViewer
 		public float ballastFactor;
 		public float inputWatts;
 
-		public int[] verticalAngles;
-		public int[] horizontalAngles;
-		public float[] candelaData;
+		public AngleCandela[] verticalAngleCandelas;
+		public AngleCandela[] horizontalAngleCandelas;
 
 		public IES ()
 		{
