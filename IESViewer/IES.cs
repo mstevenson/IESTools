@@ -5,24 +5,9 @@ namespace IESViewer
 {
 	public class IES
 	{
-		public SpecificationType specification;
+		public SpecificationType identifier;
 
-		public string identifier;
-
-		public string test;
-		public string testDate;
-		public string issueDate;
-		public string testLab;
-		public string manufacturer;
-		public string luminaireCatalog;
-		public string luminaire;
-		public string lampCatalog;
-		public string lamp;
-		public string ballastCatalog;
-		public string ballast;
-		public string distribution;
-
-		public Dictionary<string, string> customAttributes;
+		public Dictionary<string, string> attributes;
 
 		public int lampCount;
 		public float lumens;
@@ -41,7 +26,7 @@ namespace IESViewer
 
 		public IES ()
 		{
-			customAttributes = new Dictionary<string, string> ();
+			attributes = new Dictionary<string, string> ();
 		}
 	}
 }

@@ -25,16 +25,16 @@ namespace IESViewer
 
 	public class IesParser
 	{
-		enum ParseMode {
-			Identifier,
-			Keywords,
-			Tilt,
-			LampData,
-			BallastData,
-			VerticalAngles,
-			HorizontalAngles,
-			CandelaData
-		}
+//		enum ParsingStage {
+//			Identifier,
+//			Keywords,
+//			Tilt,
+//			LampData,
+//			BallastData,
+//			VerticalAngles,
+//			HorizontalAngles,
+//			CandelaData
+//		}
 
 		// http://www.ltblight.com/English.lproj/LTBLhelp/pages/iesformat.html
 		// october2010traceprowebinar.pdf
@@ -52,74 +52,56 @@ namespace IESViewer
 
 			string line;
 			using (var fs = new FileStream (this.path, FileMode.Open, FileAccess.Read)) {
-				using (var sr = new StreamReader (path)) {
-					var mode = ParseMode.Identifier;
+				using (var sr = new StreamReader (fs) {
+					var mode = ParsingStage.Identifier;
 
 					while (!sr.EndOfStream) {
 						line = sr.ReadLine ().Trim ();
 
-						if (mode == ParseMode.Identifier) {
+						if (mode == ParsingStage.Identifier) {
+							if (line.StartsWith ("IESNA")) {
+								switch (line) {
+								case "IESNA:LM-63-1991":
+									ies.identifier = SpecificationType.LM631991;
+									break;
+								case "IESNA:LM-63-1995":
+									ies.identifier = SpecificationType.LM631995;
+									break;
+								default:
+									throw new System.Exception ("IES specification identifier not recognized");
+									break;
+								}
+							} else {
+								// we have to assume it's LM-63-1986 format since this format contains no identifier
+								ies.identifier = SpecificationType.LM631986;
+							}
 							ies.identifier = line;
-							mode = ParseMode.Keywords;
+							mode = ParsingStage.Keywords;
 							continue;
 						}
 
-						if (mode == ParseMode.Keywords && !line.StartsWith ("[")) {
-							mode = ParseMode.Tilt;
+						if (mode == ParsingStage.Keywords && !line.StartsWith ("[")) {
+							mode = ParsingStage.Tilt;
 						}
 
-						if (mode == ParseMode.Keywords) {
-							if (line.StartsWith ("[") && line.EndsWith ("]")) {
-								int splitIndex = line.IndexOf (']');
-								string key = line.Remove (splitIndex).Replace ("[", "").Replace ("]", "");
-								string val = line.Substring (splitIndex).Trim ();
-								switch (key) {
-								case "TEST":
-									ies.test = val;
-									break;
-								case "TESTDATE":
-									ies.testDate = val;
-									break;
-								case "ISSUEDATE":
-									ies.issueDate = val;
-									break;
-								case "TESTLAB":
-									ies.testLab = val;
-									break;
-								case "MANUFAC":
-									ies.manufacturer = val;
-									break;
-								case "LUMCAT":
-									ies.luminaireCatalog = val;
-									break;
-								case "LUMINAIRE":
-									ies.luminaire = val;
-									break;
-								case "LAMPCAT":
-									ies.lampCatalog = val;
-									break;
-								case "LAMP":
-									ies.lamp = val;
-									break;
-								case "BALLAST":
-									ies.ballast = val;
-									break;
-								case "BALLASTCAT":
-									ies.ballastCatalog = val;
-									break;
-								case "DISTRIBUTION":
-									ies.distribution = val;
-									break;
-								default:
+						if (mode == ParsingStage.Keywords) {
+							if (ies.identifier == SpecificationType.LM631986) {
+								// The 1986 specification does not contains user-defined keywords, rather the
+								// file begins with comments requiring an arbitrary number of lines.
+
+							} else {
+								if (line.StartsWith ("[") && line.EndsWith ("]")) {
+									int splitIndex = line.IndexOf (']');
+									string key = line.Remove (splitIndex).Replace ("[", "").Replace ("]", "");
+									string val = line.Substring (splitIndex).Trim ();
 									if (!string.IsNullOrEmpty (val)) {
-										ies.customAttributes.Add (key, val);
+										ies.attributes.Add (key, val);
 									}
-									break;
 								}
 							}
 						}
 
-						if (mode == ParseMode.Tilt) {
+						if (mode == ParsingStage.Tilt) {
 							if (line.StartsWith ("IILT")) {
 								string tilt = line.Substring (5).Trim ();
 								switch (tilt) {
@@ -134,32 +116,32 @@ namespace IESViewer
 									throw new System.Exception ("Can't use TILT type");
 									break;
 								}
-								mode = ParseMode.LampData;
+								mode = ParsingStage.LampData;
 								continue;
 							}
-						} else if (mode == ParseMode.LampData) {
+						} else if (mode == ParsingStage.LampData) {
 							string[] data = line.Split (' ');
 							ies.lampCount = int.Parse (data[0]);
 							ies.lumens = float.Parse (data[1]);
 							ies.multiplier = float.Parse (data[2]);
-							ies.verticalAngles = int.Parse (data[3]);
-							ies.horizontalAngles = int.Parse (data[4]);
+							ies.verticalAnglesCount = int.Parse (data[3]);
+							ies.horizontalAnglesCount = int.Parse (data[4]);
 							ies.photometryType = (PhotometryType)(int.Parse (data[5]));
 							ies.units = (Units)(int.Parse (data[6]));
 							ies.size = new Vec3 (float.Parse (data[7]), float.Parse (data[8]), float.Parse (data[9]));
-							mode = ParseMode.BallastData;
-						} else if (mode == ParseMode.BallastData) {
+							mode = ParsingStage.BallastData;
+						} else if (mode == ParsingStage.BallastData) {
 							string[] data = line.Split (' ');
 							ies.ballastFactor = data[0];
 							// note: data[1] isn't used, it's reserved for future use
 							ies.inputWatts = data[2];
-							mode = ParseMode.VerticalAngles;
-						} else if (mode == ParseMode.VerticalAngles) {
+							mode = ParsingStage.VerticalAngles;
+						} else if (mode == ParsingStage.VerticalAngles) {
 							// TODO read the given number of vertical angles which may span multiple lines
-							mode = ParseMode.HorizontalAngles;
-						} else if (mode == ParseMode.HorizontalAngles) {
+							mode = ParsingStage.HorizontalAngles;
+						} else if (mode == ParsingStage.HorizontalAngles) {
 							// TODO read the given number of horizontal angles which may span multiple lines
-						} else if (mode == ParseMode.CandelaData) {
+						} else if (mode == ParsingStage.CandelaData) {
 							// TODO read data for verticle angles first, then for horizontal angles
 						}
 					}
