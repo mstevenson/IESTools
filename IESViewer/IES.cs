@@ -7,11 +7,11 @@ namespace IESViewer
 	{
 		public SpecificationType identifier;
 
-		public Dictionary<string, string> attributes;
+		public Dictionary<string, string> keywords;
 
 		public int lampCount;
 		public float lumens;
-		public float multiplier;
+		public float candelaMultiplier;
 		public int verticalAnglesCount;
 		public int horizontalAnglesCount;
 		public PhotometryType photometryType;
@@ -28,7 +28,7 @@ namespace IESViewer
 
 		public IES ()
 		{
-			attributes = new Dictionary<string, string> ();
+			keywords = new Dictionary<string, string> ();
 		}
 	}
 }

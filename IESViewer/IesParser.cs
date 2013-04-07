@@ -3,13 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
+// http://www.ltblight.com/English.lproj/LTBLhelp/pages/iesformat.html
+// october2010traceprowebinar.pdf
+
 namespace IESViewer
 {
 	public enum SpecificationType
 	{
 		LM631986,
 		LM631991,
-		LM631995
+		LM631995,
+		LM632002
 	}
 
 	public enum PhotometryType
@@ -32,34 +36,17 @@ namespace IESViewer
 			Horizontal
 		}
 
-//		enum ParsingStage {
-//			Identifier = 0,
-//			Keywords = 1,
-//			Tilt = 2,
-//			LampData = 3,
-//			BallastData = 4,
-//			VerticalAngles = 5,
-//			HorizontalAngles = 6,
-//			CandelaData = 7
-//		}
-
-		// http://www.ltblight.com/English.lproj/LTBLhelp/pages/iesformat.html
-		// october2010traceprowebinar.pdf
-
 		string path;
 		IES ies;
-//		ParsingStage currentStage;
 
 		public IesParser (string path)
 		{
 			this.path = path;
 		}
 
-		void Parse ()
+		public IES Parse ()
 		{
 			this.ies = new IES ();
-			
-			string line;
 			using (var fs = new FileStream (this.path, FileMode.Open, FileAccess.Read)) {
 				using (var reader = new StreamReader (fs)) {
 					ParseIdentifier (reader);
@@ -69,10 +56,12 @@ namespace IESViewer
 					ParseBallastData (reader);
 					ParseAngles (reader, Direction.Vertical);
 					ParseAngles (reader, Direction.Horizontal);
-					ParseCandelas (reader, Direction.Vertical);
-					ParseCandelas (reader, Direction.Horizontal);
+//					ParseCandelas (reader, Direction.Vertical);
+//					ParseCandelas (reader, Direction.Horizontal);
 				}
 			}
+
+			return this.ies;
 		}
 
 		void ParseIdentifier (StreamReader reader)
@@ -85,6 +74,10 @@ namespace IESViewer
 					break;
 				case "IESNA:LM-63-1995":
 					ies.identifier = SpecificationType.LM631995;
+					break;
+				case "IESNA:LM-63-2002":
+					// FIXME unable to find documentation on this format
+					ies.identifier = SpecificationType.LM632002;
 					break;
 				default:
 					throw new System.Exception ("IES specification identifier not recognized");
@@ -105,20 +98,18 @@ namespace IESViewer
 			case SpecificationType.LM631991:
 				break;
 			case SpecificationType.LM631995:
-				string lastKey;
+				string lastKey = "";
 				while (reader.Peek () == '[') {
 					var line = reader.ReadLine ().Trim ();
-					if (line.StartsWith ("[") && line.EndsWith ("]")) {
-						int splitIndex = line.IndexOf (']');
-						string key = line.Remove (splitIndex).Replace ("[", "").Replace ("]", "");
-						string val = line.Substring (splitIndex).Trim ();
-						if (!string.IsNullOrEmpty (val)) {
-							if (key == "MORE") {
-								ies.attributes[key] += "\n" + val;
-							} else {
-								ies.attributes.Add (key, val);
-								lastKey = key;
-							}
+					int splitIndex = line.IndexOf (']') + 1;
+					string key = line.Remove (splitIndex).Replace ("[", "").Replace ("]", "");
+					string val = line.Substring (splitIndex).Trim ();
+					if (!string.IsNullOrEmpty (val)) {
+						if (key == "MORE" && !string.IsNullOrEmpty (lastKey)) {
+							ies.keywords[lastKey] += "\n" + val;
+						} else {
+							ies.keywords.Add (key, val);
+							lastKey = key;
 						}
 					}
 				}
@@ -130,12 +121,12 @@ namespace IESViewer
 		{
 			var line = reader.ReadLine ().Trim ();
 			// Remove "Tilt" from the name
-			string tilt = line.Substring (5).Trim ();
+			string tilt = line.Split ('=')[1].Trim ();
 			switch (tilt) {
 			case "NONE":
 				return;
 			case "INHERIT":
-				throw new System.Exception ("Can't use TILT type");
+				throw new System.Exception ("Can't use TILT type of INHERIT");
 			default:
 				// FIXME The next line contains data about the tilt, but we can't use it yet
 				reader.ReadLine ();
@@ -148,8 +139,9 @@ namespace IESViewer
 			var line = reader.ReadLine ().Trim ();
 			string[] data = line.Split (' ');
 			ies.lampCount = int.Parse (data[0]);
+			// FIXME this is lumens per lamp, so take into account multiple lamps
 			ies.lumens = float.Parse (data[1]);
-			ies.multiplier = float.Parse (data[2]);
+			ies.candelaMultiplier = float.Parse (data[2]);
 			ies.verticalAnglesCount = int.Parse (data[3]);
 			ies.verticalAngleCandelas = new AngleCandela[ies.verticalAnglesCount];
 			ies.horizontalAnglesCount = int.Parse (data[4]);
