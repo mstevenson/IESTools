@@ -99,10 +99,10 @@ namespace IESTools
 				// FIXME add file type
 				break;
 			case SpecificationType.LM631995:
-				ParseKeywordsGeneric ();
+				ParseKeywordsGeneric (reader);
 				break;
 			case SpecificationType.LM632002:
-				ParseKeywordsGeneric ();
+				ParseKeywordsGeneric (reader);
 				break;
 			}
 		}
