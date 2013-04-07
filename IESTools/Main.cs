@@ -15,11 +15,12 @@ namespace IESTools
 				
 				System.Console.WriteLine ("Identifier: " + ies.identifier);
 				System.Console.WriteLine ("Keywords: ");
+				System.Console.WriteLine ();
 				foreach (var keyword in ies.keywords) {
-					System.Console.WriteLine ("   " + keyword.Key + ": " + keyword.Value);
+					System.Console.WriteLine (string.Format ("   {0,-12} {1}", keyword.Key, keyword.Value));
 				}
 				
-				System.Console.WriteLine ("");
+				System.Console.WriteLine ();
 				
 				System.Console.WriteLine ("Lamp Count: " + ies.lampCount);
 				System.Console.WriteLine ("Lumens: " + ies.lumensPerLamp);
@@ -30,13 +31,25 @@ namespace IESTools
 				System.Console.WriteLine ("Units: " + ies.units);
 				System.Console.WriteLine ("Size: " + ies.sizeX + ", " + ies.sizeY + ", " + ies.sizeZ);
 				
-				System.Console.WriteLine ("");
+				System.Console.WriteLine ();
 				
 				System.Console.WriteLine ("BallastFactor: " + ies.ballastFactor);
 				System.Console.WriteLine ("InputWatts: " + ies.inputWatts);
 				
-				System.Console.WriteLine ("");
-				
+				System.Console.WriteLine ();
+
+				System.Console.WriteLine ("Candela Values:");
+				System.Console.WriteLine ();
+
+				for (int i = 0; i < ies.horizontalAnglesCount; i++) {
+					for (int j = 0; j < ies.verticalAnglesCount; j++) {
+						System.Console.Write (string.Format ("{0,5} | ", ies.angleCandelas [i, j].candela));
+					}
+					System.Console.WriteLine ();
+				}
+
+				System.Console.WriteLine ();
+
 			} else {
 				Console.WriteLine ("Please specify a path to an IES file");
 			}

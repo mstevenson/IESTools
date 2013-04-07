@@ -56,8 +56,7 @@ namespace IESTools
 					ParseBallastData (reader);
 					ParseAngles (reader, Direction.Vertical);
 					ParseAngles (reader, Direction.Horizontal);
-//					ParseCandelas (reader, Direction.Vertical);
-//					ParseCandelas (reader, Direction.Horizontal);
+					ParseCandelas (reader);
 				}
 			}
 
@@ -142,9 +141,8 @@ namespace IESTools
 			ies.lumensPerLamp = float.Parse (data[1]);
 			ies.candelaMultiplier = float.Parse (data[2]);
 			ies.verticalAnglesCount = int.Parse (data[3]);
-			ies.verticalAngleCandelas = new AngleCandela[ies.verticalAnglesCount];
 			ies.horizontalAnglesCount = int.Parse (data[4]);
-			ies.horizontalAngleCandelas = new AngleCandela[ies.horizontalAnglesCount];
+			ies.angleCandelas = new AngleCandela[ies.horizontalAnglesCount, ies.verticalAnglesCount];
 			ies.photometryType = (PhotometryType)(int.Parse (data[5]));
 			ies.units = (Units)(int.Parse (data[6]));
 			ies.sizeX = float.Parse (data [7]);
@@ -166,28 +164,41 @@ namespace IESTools
 
 		void ParseAngles (StreamReader reader, Direction direction)
 		{
-			int count = 0;
-			while (count < ((direction == Direction.Vertical) ? ies.verticalAnglesCount : ies.horizontalAnglesCount)) {
-				string line = reader.ReadLine ().Trim ();
-				string[] values = line.Split (new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-				foreach (string val in values) {
-					((direction == Direction.Vertical) ? ies.verticalAngleCandelas : ies.horizontalAngleCandelas) [count].angle = float.Parse (val);
-					count++;
+			List<float> allAngleValues = GetFloatValues (reader, (direction == Direction.Vertical) ? ies.verticalAnglesCount : ies.horizontalAnglesCount);
+			for (int i = 0; i < ies.horizontalAnglesCount; i++) {
+				for (int j = 0; j < ies.verticalAnglesCount; j++) {
+					if (direction == Direction.Horizontal) {
+						ies.angleCandelas[i,j].horizontalAngle = allAngleValues[i];
+					} else if (direction == Direction.Vertical) {
+						ies.angleCandelas[i,j].verticalAngle = allAngleValues[j];
+					}
 				}
 			}
 		}
 
-		void ParseCandelas (StreamReader reader, Direction direction)
+		void ParseCandelas (StreamReader reader)
 		{
+			for (int horiz = 0; horiz < ies.horizontalAnglesCount; horiz++) {
+				List<float> currentCandelaValues = GetFloatValues (reader, ies.verticalAnglesCount);
+				for (int vert = 0; vert < ies.verticalAnglesCount; vert++) {
+					ies.angleCandelas [horiz, vert].candela = currentCandelaValues [vert];
+				}
+			}
+		}
+
+		List<float> GetFloatValues (StreamReader reader, int totalValues)
+		{
+			List<float> allValues = new List<float> ();
 			int count = 0;
-			while (count < ((direction == Direction.Vertical) ? ies.verticalAnglesCount : ies.horizontalAnglesCount)) {
+			while (count < totalValues) {
 				string line = reader.ReadLine ().Trim ();
-				string[] values = line.Split (new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-				foreach (string val in values) {
-					((direction == Direction.Vertical) ? ies.verticalAngleCandelas : ies.horizontalAngleCandelas) [count].candela = float.Parse (val);
+				string[] lineValues = line.Split (new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+				foreach (string val in lineValues) {
+					allValues.Add (float.Parse (val));
 					count++;
 				}
 			}
+			return allValues;
 		}
 	}
 }

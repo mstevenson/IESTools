@@ -23,8 +23,8 @@ namespace IESTools
 		public float ballastFactor;
 		public float inputWatts;
 
-		public AngleCandela[] verticalAngleCandelas;
-		public AngleCandela[] horizontalAngleCandelas;
+		// 2d array of horizontal angles then vertical angles
+		public AngleCandela[,] angleCandelas;
 
 		public IES ()
 		{

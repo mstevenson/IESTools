@@ -4,7 +4,8 @@ namespace IESTools
 {
 	public struct AngleCandela
 	{
-		public float angle;
+		public float horizontalAngle;
+		public float verticalAngle;
 		public float candela;
 	}
 }
