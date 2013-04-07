@@ -5,10 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{93805B12-DFEE-4493-9844-0704E6264D53}</ProjectGuid>
+    <ProjectGuid>{A6292983-C2A8-4E40-AA8E-B6BBDFBCF38D}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>IESViewer</RootNamespace>
-    <AssemblyName>IESViewer</AssemblyName>
+    <RootNamespace>IESTools</RootNamespace>
+    <AssemblyName>IESTools</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>True</DebugSymbols>
@@ -36,9 +37,9 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="IesParser.cs" />
-    <Compile Include="IES.cs" />
     <Compile Include="AngleCandela.cs" />
+    <Compile Include="IES.cs" />
+    <Compile Include="IesParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,7 +6,7 @@ using System.IO;
 // http://www.ltblight.com/English.lproj/LTBLhelp/pages/iesformat.html
 // october2010traceprowebinar.pdf
 
-namespace IESViewer
+namespace IESTools
 {
 	public enum SpecificationType
 	{

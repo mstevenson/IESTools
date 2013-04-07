@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace IESViewer
+namespace IESTools
 {
 	public class IES
 	{

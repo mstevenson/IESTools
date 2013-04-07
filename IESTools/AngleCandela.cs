@@ -1,6 +1,6 @@
 using System;
 
-namespace IESViewer
+namespace IESTools
 {
 	public struct AngleCandela
 	{
