@@ -93,26 +93,36 @@ namespace IESTools
 			case SpecificationType.LM631986:
 				// The 1986 specification does not contains user-defined keywords, rather the
 				// file begins with comments requiring an arbitrary number of lines.
+				// FIXME add file type
 				break;
 			case SpecificationType.LM631991:
+				// FIXME add file type
 				break;
 			case SpecificationType.LM631995:
-				string lastKey = "";
-				while (reader.Peek () == '[') {
-					var line = reader.ReadLine ().Trim ();
-					int splitIndex = line.IndexOf (']') + 1;
-					string key = line.Remove (splitIndex).Replace ("[", "").Replace ("]", "");
-					string val = line.Substring (splitIndex).Trim ();
-					if (!string.IsNullOrEmpty (val)) {
-						if (key == "MORE" && !string.IsNullOrEmpty (lastKey)) {
-							ies.keywords[lastKey] += "\n" + val;
-						} else {
-							ies.keywords.Add (key, val);
-							lastKey = key;
-						}
+				ParseKeywordsGeneric ();
+				break;
+			case SpecificationType.LM632002:
+				ParseKeywordsGeneric ();
+				break;
+			}
+		}
+
+		void ParseKeywordsGeneric (StreamReader reader)
+		{
+			string lastKey = "";
+			while (reader.Peek () == '[') {
+				var line = reader.ReadLine ().Trim ();
+				int splitIndex = line.IndexOf (']') + 1;
+				string key = line.Remove (splitIndex).Replace ("[", "").Replace ("]", "");
+				string val = line.Substring (splitIndex).Trim ();
+				if (!string.IsNullOrEmpty (val)) {
+					if (key == "MORE" && !string.IsNullOrEmpty (lastKey)) {
+						ies.keywords[lastKey] += "\n" + val;
+					} else {
+						ies.keywords.Add (key, val);
+						lastKey = key;
 					}
 				}
-				break;
 			}
 		}
 
