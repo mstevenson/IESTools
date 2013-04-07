@@ -22,7 +22,7 @@ namespace IESViewer
 				System.Console.WriteLine ("");
 
 				System.Console.WriteLine ("Lamp Count: " + ies.lampCount);
-				System.Console.WriteLine ("Lumens: " + ies.lumens);
+				System.Console.WriteLine ("Lumens: " + ies.lumensPerLamp);
 				System.Console.WriteLine ("Multiplier: " + ies.candelaMultiplier);
 				System.Console.WriteLine ("Vertical Angles: " + ies.verticalAnglesCount);
 				System.Console.WriteLine ("Horizontal Angles: " + ies.horizontalAnglesCount);

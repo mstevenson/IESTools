@@ -139,8 +139,7 @@ namespace IESViewer
 			var line = reader.ReadLine ().Trim ();
 			string[] data = line.Split (' ');
 			ies.lampCount = int.Parse (data[0]);
-			// FIXME this is lumens per lamp, so take into account multiple lamps
-			ies.lumens = float.Parse (data[1]);
+			ies.lumensPerLamp = float.Parse (data[1]);
 			ies.candelaMultiplier = float.Parse (data[2]);
 			ies.verticalAnglesCount = int.Parse (data[3]);
 			ies.verticalAngleCandelas = new AngleCandela[ies.verticalAnglesCount];
@@ -159,6 +158,9 @@ namespace IESViewer
 			string[] val = line.Split (' ');
 			ies.ballastFactor = float.Parse (val[0]);
 			// note: data[1] isn't used, it's reserved for future use
+
+			// FIXME data[1] used to be used for "BallastLampPhotometricFactor" in older formats
+
 			ies.inputWatts = float.Parse (val[2]);
 		}
 

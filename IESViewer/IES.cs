@@ -10,7 +10,7 @@ namespace IESViewer
 		public Dictionary<string, string> keywords;
 
 		public int lampCount;
-		public float lumens;
+		public float lumensPerLamp;
 		public float candelaMultiplier;
 		public int verticalAnglesCount;
 		public int horizontalAnglesCount;
