@@ -4,8 +4,8 @@ namespace IESViewer
 {
 	public struct AngleCandela
 	{
-		float angle;
-		float candela;
+		public float angle;
+		public float candela;
 	}
 }
 

@@ -16,7 +16,9 @@ namespace IESViewer
 		public int horizontalAnglesCount;
 		public PhotometryType photometryType;
 		public Units units;
-		public Vec3 size;
+		public float sizeX;
+		public float sizeY;
+		public float sizeZ;
 
 		public float ballastFactor;
 		public float inputWatts;
