@@ -38,10 +38,10 @@ namespace IESTools
 			return 0;
 		}
 
-		IesPixel CandelaToPixel (double candela)
+		Pixel CandelaToPixel (double candela)
 		{
 			// TODO
-			return new IesPixel (0, 0, 0);
+			return new Pixel (0, 0, 0);
 		}
 
 	}

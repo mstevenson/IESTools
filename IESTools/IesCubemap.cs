@@ -12,12 +12,12 @@ namespace IESTools
 		{
 			this.resolution = resolution;
 			this.textures = new Dictionary<CubeFace, IesTexture> ();
-			textures.Add (CubeFace.Right, new IESTools.IesTexture (resolution));
-			textures.Add (CubeFace.Left, new IESTools.IesTexture (resolution));
-			textures.Add (CubeFace.Top, new IESTools.IesTexture (resolution));
-			textures.Add (CubeFace.Bottom, new IESTools.IesTexture (resolution));
-			textures.Add (CubeFace.Front, new IESTools.IesTexture (resolution));
-			textures.Add (CubeFace.Back, new IESTools.IesTexture (resolution));
+			textures.Add (CubeFace.Right, new IESTools.IesTexture (resolution, resolution));
+			textures.Add (CubeFace.Left, new IESTools.IesTexture (resolution, resolution));
+			textures.Add (CubeFace.Top, new IESTools.IesTexture (resolution, resolution));
+			textures.Add (CubeFace.Bottom, new IESTools.IesTexture (resolution, resolution));
+			textures.Add (CubeFace.Front, new IESTools.IesTexture (resolution, resolution));
+			textures.Add (CubeFace.Back, new IESTools.IesTexture (resolution, resolution));
 		}
 
 		public static Vec3 CubePointToSpherePoint (CubeFace face, float x, float y)
