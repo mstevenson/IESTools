@@ -28,7 +28,7 @@ namespace IESTools
 			sb.AppendFormat ("-Y {0} +X {1}", texture.Width, texture.Height);
 			sb.AppendLine ();
 
-			char[] data = new byte[sb.Length];
+			char[] data = new char[sb.Length];
 			sb.CopyTo (0, data, 0, sb.Length);
 
 			for (int y = 0; y < texture.Height; y++) {
