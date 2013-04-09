@@ -6,23 +6,23 @@ namespace IESTools
 	{
 		public int Width { get; private set; }
 		public int Height { get; private set; }
-		Pixel[,] pixels;
+		double[,] intensities;
 
 		public IesTexture (int width, int height)
 		{
 			this.Width = width;
 			this.Height = height;
-			pixels = new Pixel[width, height];
+			intensities = new double[width, height];
 		}
 
-		public void WritePixel (int x, int y, Pixel value)
+		public void WritePixelIntensity (int x, int y, double intensity)
 		{
-			pixels [x, y] = value;
+			intensities [x, y] = intensity;
 		}
 
-		public Pixel ReadPixel (int x, int y)
+		public double ReadPixelIntensity (int x, int y)
 		{
-			return pixels [x, y];
+			return intensities [x, y];
 		}
 	}
 }

@@ -43,12 +43,11 @@
     <Compile Include="Vec3.cs" />
     <Compile Include="LatLon.cs" />
     <Compile Include="CubeFace.cs" />
-    <Compile Include="IesCubemap.cs" />
     <Compile Include="IesData.cs" />
+    <Compile Include="RGBEFile.cs" />
+    <Compile Include="PixelRGBE.cs" />
+    <Compile Include="Cubemap.cs" />
     <Compile Include="IesTexture.cs" />
-    <Compile Include="RadianceFile.cs" />
-    <Compile Include="Pixel.cs" />
-    <Compile Include="RGBE.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

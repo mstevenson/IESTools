@@ -2,6 +2,9 @@ using System;
 
 namespace IESTools
 {
+	/// <summary>
+	/// Lattitude-Longitude coordinate in radians.
+	/// </summary>
 	public struct LatLon
 	{
 		/// <summary>

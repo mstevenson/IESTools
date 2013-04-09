@@ -2,14 +2,17 @@ using System;
 
 namespace IESTools
 {
-	public struct RGBE
+	/// <summary>
+	/// A pixel in RGBE format.
+	/// </summary>
+	public struct PixelRGBE
 	{
 		public byte r;
 		public byte g;
 		public byte b;
 		public byte e;
 
-		public RGBE (float r, float g, float b)
+		public PixelRGBE (float r, float g, float b)
 		{
 			// Based on code by Greg Ward and Bruce Walter
 			// http://www.graphics.cornell.edu/%7Ebjw/rgbe/rgbe.c
@@ -68,14 +71,14 @@ namespace IESTools
 			if (obj == null) {
 				return false;
 			}
-			if (obj is RGBE == false) {
+			if (obj is PixelRGBE == false) {
 				return false;
 			}
-			var p = (RGBE)obj;
+			var p = (PixelRGBE)obj;
 			return (p.r == r && p.g == g && p.b == b && p.e == e);
 		}
 		
-		public static bool operator ==(RGBE a, RGBE b)
+		public static bool operator ==(PixelRGBE a, PixelRGBE b)
 		{
 			if (System.Object.ReferenceEquals (a, b)) {
 				return true;
@@ -86,7 +89,7 @@ namespace IESTools
 			return (a.r == b.r && a.g == b.g && a.b == b.b && a.e == b.e);
 		}
 		
-		public static bool operator !=(RGBE a, RGBE b)
+		public static bool operator !=(PixelRGBE a, PixelRGBE b)
 		{
 			return !(a == b);
 		}

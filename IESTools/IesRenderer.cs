@@ -8,42 +8,32 @@ namespace IESTools
 		{
 		}
 
-		public IESCubemap RenderCubemap (int resolution, IesData iesData)
+		public Cubemap RenderCubemap (int resolution, IesData iesData)
 		{
-			IESCubemap cubemap = new IESCubemap (resolution);
-
+			Cubemap cubemap = new Cubemap (resolution);
 			foreach (var kvp in cubemap.textures) {
 				CubeFace face = kvp.Key;
 				IesTexture texture = kvp.Value;
-				float offset = (1 / cubemap.resolution) / 2;
+				double offset = (1 / cubemap.resolution) / 2;
 				for (int y = 0; y < cubemap.resolution; y++) {
-					float yNorm = (y / cubemap.resolution) + offset;
+					double yNorm = (y / cubemap.resolution) + offset;
 					for (int x = 0; x < cubemap.resolution; x++) {
-						float xNorm = (x / cubemap.resolution) + offset;
-						var spherePoint = IESCubemap.CubePointToSpherePoint (face, xNorm, yNorm);
-						var latLongPoint = LatLon.FromSpherePoint (spherePoint);
-						var candela = GetInterpolatedCandela (latLongPoint, iesData.angleCandelas[x, y]);
-						var pixel = CandelaToPixel (candela);
-						texture.WritePixel (x, y, pixel);
+						double xNorm = (x / cubemap.resolution) + offset;
+						Vec3 spherePoint = Cubemap.CubePointToSpherePoint (face, xNorm, yNorm);
+						LatLon latLongPoint = LatLon.FromSpherePoint (spherePoint);
+						double candela = InterpolatedCandelaFromData (latLongPoint, iesData.angleCandelas);
+						texture.WritePixelIntensity (x, y, candela);
 					}
 				}
 			}
-
 			return cubemap;
 		}
 
-		double GetInterpolatedCandela (LatLon position, AngleCandela data)
+		double InterpolatedCandelaFromData (LatLon position, AngleCandela[,] data)
 		{
 			// TODO interpolation function
 			return 0;
 		}
-
-		Pixel CandelaToPixel (double candela)
-		{
-			// TODO
-			return new Pixel (0, 0, 0);
-		}
-
 	}
 }
 

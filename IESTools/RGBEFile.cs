@@ -3,16 +3,17 @@ using System.IO;
 
 namespace IESTools
 {
-	// Specification:
-	// http://paulbourke.net/dataformats/pic/
-
-	public class RadianceFile
+	/// <summary>
+	/// An RGBE image file, originally developed for the Radiance renderer.
+	/// Specification: http://paulbourke.net/dataformats/pic/
+	/// </summary>
+	public class RGBEFile
 	{
 		public string creatorName;
 
 		IesTexture texture;
 
-		public RadianceFile (IesTexture texture)
+		public RGBEFile (IesTexture texture)
 		{
 			this.texture = texture;
 		}
@@ -34,8 +35,9 @@ namespace IESTools
 			for (int y = 0; y < texture.Height; y++) {
 				for (int x = 0; x < texture.Width; x++) {
 					// RLE
-					if (x > 0 && texture.ReadPixel (x - 1, y) == texture.ReadPixel (x, y)) {
+					if (x > 0 && texture.ReadPixelIntensity (x - 1, y) == texture.ReadPixelIntensity (x, y)) {
 						// TODO write RLE data
+						// http://www.graphics.cornell.edu/%7Ebjw/rgbe/rgbe.c
 					} else {
 						// TODO write the pixel value
 					}

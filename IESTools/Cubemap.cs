@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace IESTools
 {
-	public class IESCubemap
+	public class Cubemap
 	{
 		public readonly int resolution;
 		public readonly Dictionary<CubeFace, IesTexture> textures;
 
-		public IESCubemap (int resolution)
+		public Cubemap (int resolution)
 		{
 			this.resolution = resolution;
 			this.textures = new Dictionary<CubeFace, IesTexture> ();
@@ -20,7 +20,7 @@ namespace IESTools
 			textures.Add (CubeFace.Back, new IESTools.IesTexture (resolution, resolution));
 		}
 
-		public static Vec3 CubePointToSpherePoint (CubeFace face, float x, float y)
+		public static Vec3 CubePointToSpherePoint (CubeFace face, double x, double y)
 		{
 			switch (face) {
 			case CubeFace.Front:
