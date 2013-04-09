@@ -8,9 +8,9 @@ namespace IESTools
 		{
 		}
 
-		public Cubemap RenderCubemap (int resolution, IesData iesData)
+		public IesCubemap RenderCubemap (int resolution, IesData iesData)
 		{
-			Cubemap cubemap = new Cubemap (resolution);
+			IesCubemap cubemap = new IesCubemap (resolution);
 			foreach (var kvp in cubemap.textures) {
 				CubeFace face = kvp.Key;
 				IesTexture texture = kvp.Value;
@@ -19,7 +19,7 @@ namespace IESTools
 					double yNorm = (y / cubemap.resolution) + offset;
 					for (int x = 0; x < cubemap.resolution; x++) {
 						double xNorm = (x / cubemap.resolution) + offset;
-						Vec3 spherePoint = Cubemap.CubePointToSpherePoint (face, xNorm, yNorm);
+						Vec3 spherePoint = IesCubemap.CubePointToSpherePoint (face, xNorm, yNorm);
 						LatLon latLongPoint = LatLon.FromSpherePoint (spherePoint);
 						double candela = InterpolatedCandelaFromData (latLongPoint, iesData.angleCandelas);
 						texture.WritePixelIntensity (x, y, candela);

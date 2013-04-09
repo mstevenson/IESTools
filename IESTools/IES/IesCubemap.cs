@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace IESTools
 {
-	public class Cubemap
+	public class IesCubemap
 	{
 		public readonly int resolution;
 		public readonly Dictionary<CubeFace, IesTexture> textures;
 
-		public Cubemap (int resolution)
+		public IesCubemap (int resolution)
 		{
 			this.resolution = resolution;
 			this.textures = new Dictionary<CubeFace, IesTexture> ();

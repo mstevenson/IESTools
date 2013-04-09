@@ -37,17 +37,22 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="AngleCandela.cs" />
-    <Compile Include="IesParser.cs" />
-    <Compile Include="IesRenderer.cs" />
-    <Compile Include="Vec3.cs" />
-    <Compile Include="LatLon.cs" />
-    <Compile Include="CubeFace.cs" />
-    <Compile Include="IesData.cs" />
-    <Compile Include="RGBEFile.cs" />
-    <Compile Include="PixelRGBE.cs" />
-    <Compile Include="Cubemap.cs" />
-    <Compile Include="IesTexture.cs" />
+    <Compile Include="RGBE\RGBEFile.cs" />
+    <Compile Include="RGBE\RGBEPixel.cs" />
+    <Compile Include="IES\IesData.cs" />
+    <Compile Include="IES\IesRenderer.cs" />
+    <Compile Include="IES\IesParser.cs" />
+    <Compile Include="IES\IesTexture.cs" />
+    <Compile Include="IES\IesCubemap.cs" />
+    <Compile Include="Data Structures\AngleCandela.cs" />
+    <Compile Include="Data Structures\LatLon.cs" />
+    <Compile Include="Data Structures\Vec3.cs" />
+    <Compile Include="Data Structures\CubeFace.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="RGBE\" />
+    <Folder Include="IES\" />
+    <Folder Include="Data Structures\" />
+  </ItemGroup>
 </Project>

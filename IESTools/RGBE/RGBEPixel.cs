@@ -5,14 +5,14 @@ namespace IESTools
 	/// <summary>
 	/// A pixel in RGBE format.
 	/// </summary>
-	public struct PixelRGBE
+	public struct RGBEPixel
 	{
 		public byte r;
 		public byte g;
 		public byte b;
 		public byte e;
 
-		public PixelRGBE (float r, float g, float b)
+		public RGBEPixel (float r, float g, float b)
 		{
 			// Based on code by Greg Ward and Bruce Walter
 			// http://www.graphics.cornell.edu/%7Ebjw/rgbe/rgbe.c
@@ -71,14 +71,14 @@ namespace IESTools
 			if (obj == null) {
 				return false;
 			}
-			if (obj is PixelRGBE == false) {
+			if (obj is RGBEPixel == false) {
 				return false;
 			}
-			var p = (PixelRGBE)obj;
+			var p = (RGBEPixel)obj;
 			return (p.r == r && p.g == g && p.b == b && p.e == e);
 		}
 		
-		public static bool operator ==(PixelRGBE a, PixelRGBE b)
+		public static bool operator ==(RGBEPixel a, RGBEPixel b)
 		{
 			if (System.Object.ReferenceEquals (a, b)) {
 				return true;
@@ -89,7 +89,7 @@ namespace IESTools
 			return (a.r == b.r && a.g == b.g && a.b == b.b && a.e == b.e);
 		}
 		
-		public static bool operator !=(PixelRGBE a, PixelRGBE b)
+		public static bool operator !=(RGBEPixel a, RGBEPixel b)
 		{
 			return !(a == b);
 		}
