@@ -19,7 +19,7 @@ namespace IESTools
 					double yNorm = (y / cubemap.resolution) + offset;
 					for (int x = 0; x < cubemap.resolution; x++) {
 						double xNorm = (x / cubemap.resolution) + offset;
-						Vec3 spherePoint = IesCubemap.CubePointToSpherePoint (face, xNorm, yNorm);
+						Vec3 spherePoint = IesCubemap.CubeToSpherePoint (face, xNorm, yNorm);
 						LatLon latLongPoint = LatLon.FromSpherePoint (spherePoint);
 						double candela = InterpolatedCandelaFromData (latLongPoint, iesData.angleCandelas);
 						texture.WritePixelIntensity (x, y, candela);

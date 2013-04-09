@@ -20,27 +20,34 @@ namespace IESTools
 			textures.Add (CubeFace.Back, new IESTools.IesTexture (resolution, resolution));
 		}
 
-		public static Vec3 CubePointToSpherePoint (CubeFace face, double x, double y)
+		/// <summary>
+		/// Map a 2d point on a given face of a unit cube to a corresponding point on a unit sphere.
+		/// </summary>
+		/// <returns>The to sphere point.</returns>
+		public static Vec3 CubeToSpherePoint (CubeFace face, double x, double y)
 		{
 			switch (face) {
 			case CubeFace.Front:
-				return CubePointToSpherePoint (x, y, -0.5);
+				return CubeToSpherePoint (x, y, -0.5);
 			case CubeFace.Back:
-				return CubePointToSpherePoint (-x, y, 0.5);
+				return CubeToSpherePoint (-x, y, 0.5);
 			case CubeFace.Left:
-				return CubePointToSpherePoint (-0.5, y, x);
+				return CubeToSpherePoint (-0.5, y, x);
 			case CubeFace.Right:
-				return CubePointToSpherePoint (0.5, y, -x);
+				return CubeToSpherePoint (0.5, y, -x);
 			case CubeFace.Top:
-				return CubePointToSpherePoint (x, 0.5, y);
+				return CubeToSpherePoint (x, 0.5, y);
 			case CubeFace.Bottom:
-				return CubePointToSpherePoint (x, -0.5, -y);
+				return CubeToSpherePoint (x, -0.5, -y);
 			default:
 				return new Vec3 (0, 0, 0);
 			}
 		}
 
-		public static Vec3 CubePointToSpherePoint (double x, double y, double z)
+		/// <summary>
+		/// Map a point on the surface of a unit cube onto the surface of a unit sphere.
+		/// </summary>
+		public static Vec3 CubeToSpherePoint (double x, double y, double z)
 		{
 			Vec3 point = new Vec3 ();
 			point.x = x * Math.Sqrt (1 - (y * y) / 2 - (z * z) / 2 + (y * y * z * z) / 3);

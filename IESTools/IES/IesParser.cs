@@ -152,7 +152,7 @@ namespace IESTools
 			ies.candelaMultiplier = float.Parse (data[2]);
 			ies.verticalAnglesCount = int.Parse (data[3]);
 			ies.horizontalAnglesCount = int.Parse (data[4]);
-			ies.angleCandelas = new AngleCandela[ies.horizontalAnglesCount, ies.verticalAnglesCount];
+			ies.angleCandelas = new AngleCandela[ies.verticalAnglesCount, ies.horizontalAnglesCount];
 			ies.photometryType = (PhotometryType)(int.Parse (data[5]));
 			ies.units = (Units)(int.Parse (data[6]));
 			ies.sizeX = float.Parse (data [7]);
@@ -175,12 +175,12 @@ namespace IESTools
 		void ParseAngles (StreamReader reader, Direction direction)
 		{
 			List<float> allAngleValues = GetFloatValues (reader, (direction == Direction.Vertical) ? ies.verticalAnglesCount : ies.horizontalAnglesCount);
-			for (int i = 0; i < ies.horizontalAnglesCount; i++) {
-				for (int j = 0; j < ies.verticalAnglesCount; j++) {
+			for (int vert = 0; vert < ies.verticalAnglesCount; vert++) {
+				for (int horiz = 0; horiz < ies.horizontalAnglesCount; horiz++) {
 					if (direction == Direction.Horizontal) {
-						ies.angleCandelas[i,j].horizontalAngle = allAngleValues[i];
+						ies.angleCandelas[vert, horiz].horizontalAngle = allAngleValues[horiz];
 					} else if (direction == Direction.Vertical) {
-						ies.angleCandelas[i,j].verticalAngle = allAngleValues[j];
+						ies.angleCandelas[vert, horiz].verticalAngle = allAngleValues[vert];
 					}
 				}
 			}
@@ -188,10 +188,10 @@ namespace IESTools
 
 		void ParseCandelas (StreamReader reader)
 		{
-			for (int horiz = 0; horiz < ies.horizontalAnglesCount; horiz++) {
+			for (int y = 0; y < ies.verticalAnglesCount; y++) {
 				List<float> currentCandelaValues = GetFloatValues (reader, ies.verticalAnglesCount);
-				for (int vert = 0; vert < ies.verticalAnglesCount; vert++) {
-					ies.angleCandelas [horiz, vert].candela = currentCandelaValues [vert];
+				for (int x = 0; x < ies.horizontalAnglesCount; x++) {
+					ies.angleCandelas [y, x].candela = currentCandelaValues [y];
 				}
 			}
 		}

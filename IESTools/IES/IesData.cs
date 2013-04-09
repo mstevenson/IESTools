@@ -23,7 +23,9 @@ namespace IESTools
 		public float ballastFactor;
 		public float inputWatts;
 
-		// 2d array of horizontal angles then vertical angles
+		/// <summary>
+		/// A lat-long array of degree angles and their associated candela values.
+		/// </summary>
 		public AngleCandela[,] angleCandelas;
 
 		public IesData ()
