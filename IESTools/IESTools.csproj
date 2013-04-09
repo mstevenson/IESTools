@@ -38,8 +38,14 @@
     <Compile Include="Main.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="AngleCandela.cs" />
-    <Compile Include="IES.cs" />
     <Compile Include="IesParser.cs" />
+    <Compile Include="IesRenderer.cs" />
+    <Compile Include="Vec3.cs" />
+    <Compile Include="LatLon.cs" />
+    <Compile Include="CubeFace.cs" />
+    <Compile Include="IesCubemap.cs" />
+    <Compile Include="IesData.cs" />
+    <Compile Include="IesTexture.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
