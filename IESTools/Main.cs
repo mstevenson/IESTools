@@ -22,7 +22,7 @@ namespace IESTools
 			}
 		}
 
-		static void DisplayIesData (IES ies)
+		static void DisplayIesData (IesData ies)
 		{
 			System.Console.WriteLine ("");
 			

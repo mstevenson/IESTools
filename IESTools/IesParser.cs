@@ -37,16 +37,16 @@ namespace IESTools
 		}
 
 		string path;
-		IES ies;
+		IesData ies;
 
 		public IesParser (string path)
 		{
 			this.path = path;
 		}
 
-		public IES Parse ()
+		public IesData Parse ()
 		{
-			this.ies = new IES ();
+			this.ies = new IesData ();
 			using (var fs = new FileStream (this.path, FileMode.Open, FileAccess.Read)) {
 				using (var reader = new StreamReader (fs)) {
 					ParseIdentifier (reader);

@@ -20,7 +20,7 @@ namespace IESTools
 			textures.Add (CubeFace.Back, new IESTools.IesTexture (resolution));
 		}
 
-		public static Vec3 CubeFacePointToSpherePoint (CubeFace face, float x, float y)
+		public static Vec3 CubePointToSpherePoint (CubeFace face, float x, float y)
 		{
 			switch (face) {
 			case CubeFace.Front:
@@ -40,7 +40,7 @@ namespace IESTools
 			}
 		}
 
-		static Vec3 CubePointToSpherePoint (double x, double y, double z)
+		public static Vec3 CubePointToSpherePoint (double x, double y, double z)
 		{
 			Vec3 point = new Vec3 ();
 			point.x = x * Math.Sqrt (1 - (y * y) / 2 - (z * z) / 2 + (y * y * z * z) / 3);

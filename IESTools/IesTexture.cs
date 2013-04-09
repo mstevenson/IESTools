@@ -4,14 +4,14 @@ namespace IESTools
 {
 	public class IesTexture
 	{
-		float[,] pixels;
+		IesPixel[,] pixels;
 
 		public IesTexture (int resolution)
 		{
-			pixels = new float[resolution, resolution];
+			pixels = new IesPixel[resolution, resolution];
 		}
 
-		public void WritePixel (int horizontal, int vertical, float value)
+		public void WritePixel (int horizontal, int vertical, IesPixel value)
 		{
 			pixels [horizontal, vertical] = value;
 		}

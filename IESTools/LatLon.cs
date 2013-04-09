@@ -22,8 +22,8 @@ namespace IESTools
 
 		public static LatLon FromSpherePoint (Vec3 point, float radius = 1)
 		{
-			double lat = Math.Acos (point.y / radius);
-			double lon = Math.Atan (point.x / point.z);
+			double lat = Math.Acos (point.y / radius); // theta
+			double lon = Math.Atan (point.x / point.z); // phi
 			return new LatLon (lat, lon);
 		}
 	}

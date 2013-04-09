@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace IESTools
 {
-	public class IES
+	public class IesData
 	{
 		public SpecificationType identifier;
 
@@ -26,7 +26,7 @@ namespace IESTools
 		// 2d array of horizontal angles then vertical angles
 		public AngleCandela[,] angleCandelas;
 
-		public IES ()
+		public IesData ()
 		{
 			keywords = new Dictionary<string, string> ();
 		}
